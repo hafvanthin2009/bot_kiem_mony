@@ -3,50 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xác nhận hoàn thành</title>
+    <title>Nạp Tiền & Nhận Key | Umohvt Bot</title>
     <style>
-        * { font-family: sans-serif; text-align: center; padding: 10px; }
-        .thanh-cong { color: #22c55e; font-size: 1.4em; font-weight: bold; }
-        .loi { color: #ef4444; font-size: 1.2em; }
-        .hop { border: 2px solid #e5e7eb; border-radius: 12px; padding: 30px; max-width: 450px; margin: 0 auto; }
-        .tai { color: #6b7280; font-size: 0.9em; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a8cd8 0%, #6c5ce7 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 420px; margin: 0 auto; }
+        .card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 35px 25px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.25);
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .icon { text-align: center; font-size: 55px; margin-bottom: 10px; }
+        h2 {
+            text-align: center;
+            color: #1a1a2e;
+            font-size: 22px;
+            margin-bottom: 25px;
+        }
+        .amount {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #00b894;
+            margin: 10px 0 20px;
+        }
+        .key-box {
+            background: linear-gradient(135deg, #e8f4ff, #d4e4ff);
+            padding: 20px;
+            border-radius: 14px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #2d3436;
+            letter-spacing: 2px;
+            margin: 20px 0;
+            word-break: break-all;
+        }
+        .cmd {
+            background: #f1f2f6;
+            padding: 14px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            font-size: 15px;
+            color: #2d3436;
+            margin: 15px 0;
+        }
+        .btn {
+            display: block;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 17px;
+            margin-top: 20px;
+            transition: all 0.25s ease;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+        .btn-telegram { background: #0088cc; color: white; }
+        .btn-green { background: #00b894; color: white; }
+        .divider {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 25px 0;
+        }
+        .note {
+            font-size: 13px;
+            color: #888;
+            text-align: center;
+            margin-top: 15px;
+            line-height: 1.5;
+        }
+        .error-icon { color: #e17055; }
+        .success-icon { color: #00b894; }
+        .ref-box {
+            background: #fff9c4;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <div class="hop">
-        <h2>🔐 Đang xác nhận...</h2>
-        <div id="thong_bao">
-            <p class="tai">Vui lòng chờ trong giây lát...</p>
+    <div class="container">
+        <div class="card">
+            <div id="icon" class="icon">🔐</div>
+            <h2 id="title">Đang xử lý...</h2>
+            <div id="content"></div>
         </div>
     </div>
 
     <script>
-        const ts = new URLSearchParams(window.location.search);
-        const key = ts.get('key');
-        const uid = ts.get('uid');
-        const thong_bao = document.getElementById('thong_bao');
+        // ========== CẤU HÌNH BOT ==========
+        const BOT_USERNAME = "Umohvt_bot";
+        const BOT_LINK = `https://t.me/${BOT_USERNAME}`;
+        // ==================================
 
-        if (!key || !uid) {
-            thong_bao.innerHTML = `<p class="loi">❌ Thiếu thông tin! Mở link từ bot nhé.</p>`;
-        } else {
-            const SERVER_BOT = "https://thay-bang-link-replit-cua-ban.repl.co/xac-nhan-key";
-            
-            fetch(SERVER_BOT, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ key, uid })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === "thanh_cong") {
-                    thong_bao.innerHTML = `<p class="thanh-cong">✅ ${data.thong_bao}</p>`;
-                } else {
-                    thong_bao.innerHTML = `<p class="loi">❌ ${data.thong_bao}</p>`;
-                }
-            })
-            .catch(() => {
-                thong_bao.innerHTML = `<p class="loi">❌ Mất kết nối!</p>`;
-            });
+        const params = new URLSearchParams(window.location.search);
+        const ref = params.get('ref');
+        const key = params.get('key');
+        const amount = params.get('amount');
+
+        const iconEl = document.getElementById('icon');
+        const titleEl = document.getElementById('title');
+        const contentEl = document.getElementById('content');
+
+        // === TRƯỜNG HỢP 1: Vào link giới thiệu ===
+        if (ref) {
+            iconEl.textContent = "👋";
+            titleEl.textContent = "Chào Bạn!";
+            contentEl.innerHTML = `
+                <div class="ref-box">
+                    <p style="font-size:16px; color:#555; margin-bottom:8px;">
+                        🎉 Bạn đã vào qua lời mời
+                    </p>
+                    <p style="color:#666; font-size:14px;">
+                        Mở Bot để nhận điểm thưởng & bắt đầu
+                    </p>
+                </div>
+                <a href="${BOT_LINK}?start=${ref}" class="btn btn-telegram">
+                    🤖 Mở @${BOT_USERNAME}
+                </a>
+                <p class="note">
+                    Tự động ghi nhận bạn đã được mời +5 điểm cho người giới thiệu
+                </p>
+            `;
+        }
+
+        // === TRƯỜNG HỢP 2: Hiển thị Key nạp tiền ===
+        else if (key && amount) {
+            const soTien = parseInt(amount).toLocaleString('vi');
+            iconEl.textContent = "✅";
+            titleEl.textContent = "Tạo Key Thành Công";
+            contentEl.innerHTML = `
+                <p class="amount">${soTien}đ</p>
+                <div class="key-box">${key}</div>
+                <p style="text-align:center; color:#666; font-size:15px;">
+                    Nhập lệnh sau vào Bot để nạp tiền:
+                </p>
+                <div class="cmd">/nhapkey ${key}</div>
+                <div class="divider"></div>
+                <a href="${BOT_LINK}" class="btn btn-green">
+                    💬 Đến Bot Nạp Ngay
+                </a>
+                <p class="note">
+                    ⚠️ Key chỉ dùng được <strong>1 lần</strong> & hợp lệ vĩnh viễn cho đến khi sử dụng<br>
+                    Nếu báo "không hợp lệ" → kiểm tra lại đã gõ đúng chưa
+                </p>
+            `;
+        }
+
+        // === TRƯỜNG HỢP 3: Thiếu tham số / Truy cập trực tiếp ===
+        else {
+            iconEl.textContent = "❌";
+            titleEl.textContent = "Thiếu Thông Tin";
+            contentEl.innerHTML = `
+                <p style="text-align:center; color:#e17055; padding:10px; font-size:15px; line-height:1.6;">
+                    Vui lòng mở link từ Bot chính thức nhé!<br>
+                    Link trực tiếp sẽ không hoạt động.
+                </p>
+                <a href="${BOT_LINK}" class="btn btn-telegram">
+                    🚀 Vào @${BOT_USERNAME}
+                </a>
+                <p class="note">
+                    Trong Bot gõ lệnh <strong>/start</strong> hoặc <strong>/nap</strong> để nhận link hợp lệ
+                </p>
+            `;
         }
     </script>
 </body>
