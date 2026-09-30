@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác nhận hoàn thành</title>
+    <style>
+        * { font-family: sans-serif; text-align: center; padding: 10px; }
+        .thanh-cong { color: #22c55e; font-size: 1.4em; font-weight: bold; }
+        .loi { color: #ef4444; font-size: 1.2em; }
+        .hop { border: 2px solid #e5e7eb; border-radius: 12px; padding: 30px; max-width: 450px; margin: 0 auto; }
+        .tai { color: #6b7280; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="hop">
+        <h2>🔐 Đang xác nhận...</h2>
+        <div id="thong_bao">
+            <p class="tai">Vui lòng chờ trong giây lát...</p>
+        </div>
+    </div>
+
+    <script>
+        const ts = new URLSearchParams(window.location.search);
+        const key = ts.get('key');
+        const uid = ts.get('uid');
+        const thong_bao = document.getElementById('thong_bao');
+
+        if (!key || !uid) {
+            thong_bao.innerHTML = `<p class="loi">❌ Thiếu thông tin! Mở link từ bot nhé.</p>`;
+        } else {
+            const SERVER_BOT = "https://thay-bang-link-replit-cua-ban.repl.co/xac-nhan-key";
+            
+            fetch(SERVER_BOT, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ key, uid })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "thanh_cong") {
+                    thong_bao.innerHTML = `<p class="thanh-cong">✅ ${data.thong_bao}</p>`;
+                } else {
+                    thong_bao.innerHTML = `<p class="loi">❌ ${data.thong_bao}</p>`;
+                }
+            })
+            .catch(() => {
+                thong_bao.innerHTML = `<p class="loi">❌ Mất kết nối!</p>`;
+            });
+        }
+    </script>
+</body>
+</html>
