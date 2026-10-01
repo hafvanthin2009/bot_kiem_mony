@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nhận Key | Umohvt Bot</title>
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Quản Lý Key | Umohvt Bot</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
         body {
@@ -16,216 +19,98 @@
         }
 
         .error-card {
-            background: #fff;
-            border-radius: 24px;
-            padding: 40px 30px;
-            width: 100%;
-            max-width: 380px;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            position: relative;
+            background: #fff; border-radius: 24px; padding: 40px 30px;
+            width: 100%; max-width: 380px; text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15); position: relative;
         }
-        .lock-icon {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            font-size: 20px;
+        .lock-top-badge {
+            position: absolute; top: 15px; left: 15px;
+            background: #4B79F6; color: white; padding: 6px 14px;
+            border-radius: 20px; font-size: 14px; font-weight: 600;
         }
-        .error-icon {
-            font-size: 70px;
-            color: #ff4444;
-            margin-bottom: 15px;
-        }
-        .error-title {
-            font-size: 26px;
-            font-weight: bold;
-            color: #1a1a2e;
-            margin-bottom: 10px;
-        }
-        .error-desc {
-            color: #888;
-            font-size: 15px;
-            margin-bottom: 30px;
-        }
+        .error-icon { font-size: 60px; color: #ff4444; margin: 25px 0 15px; }
+        .error-title { font-size: 26px; font-weight: bold; color: #1a1a2e; margin-bottom: 10px; }
+        .error-desc { color: #888; font-size: 15px; margin-bottom: 30px; }
         .bot-btn {
-            display: block;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
             background: linear-gradient(90deg, #2588f0, #0099ff);
-            color: white;
-            text-decoration: none;
-            padding: 15px;
-            border-radius: 14px;
-            font-weight: bold;
-            font-size: 17px;
-            transition: transform 0.2s;
+            color: white; text-decoration: none; padding: 15px;
+            border-radius: 14px; font-weight: bold; font-size: 17px;
         }
         .bot-btn:active { transform: scale(0.97); }
 
         .key-card {
-            background: #fff;
-            border-radius: 24px;
-            padding: 35px 25px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            background: #fff; border-radius: 24px; padding: 35px 25px;
+            width: 100%; max-width: 420px; box-shadow: 0 10px 40px rgba(0,0,0,0.15);
         }
-        .page-title {
-            text-align: center;
-            font-size: 22px;
-            font-weight: bold;
-            color: #1a1a2e;
-            margin-bottom: 5px;
-        }
-        .page-sub {
-            text-align: center;
-            color: #888;
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
-        .key-box {
-            background: #1e1e38;
-            border-radius: 16px;
-            padding: 20px;
-            margin: 15px 0;
-        }
+        .page-title { text-align: center; font-size: 22px; font-weight: bold; color: #1a1a2e; margin-bottom: 5px; }
+        .page-sub { text-align: center; color: #888; font-size: 14px; margin-bottom: 25px; }
+        .key-box { background: #1e1e38; border-radius: 16px; padding: 20px; margin: 15px 0; }
         .key-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #2d2d50;
-            border-radius: 12px;
-            padding: 14px 16px;
+            display: flex; align-items: center; gap: 10px;
+            background: #2d2d50; border-radius: 12px; padding: 14px 16px;
         }
         .key-text {
-            flex: 1;
-            color: #00ff88;
-            font-size: 18px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            font-family: 'Courier New', monospace;
-            word-break: break-all;
+            flex: 1; color: #00ff88; font-size: 18px; font-weight: bold;
+            letter-spacing: 1px; font-family: 'Courier New', monospace; word-break: break-all;
         }
         .copy-btn {
-            background: #4B79F6;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 16px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 15px;
-            white-space: nowrap;
+            background: #4B79F6; color: white; border: none; border-radius: 8px;
+            padding: 10px 16px; font-weight: bold; cursor: pointer; font-size: 15px;
         }
-        .copy-btn:active { transform: scale(0.95); }
-        .note-one {
-            color: #ffcc00;
-            text-align: center;
-            font-weight: bold;
-            margin-top: 12px;
-            font-size: 15px;
-        }
+        .note-one { color: #ffcc00; text-align: center; font-weight: bold; margin-top: 12px; font-size: 15px; }
         .cmd-box {
-            background: #f1f2f6;
-            padding: 12px;
-            border-radius: 10px;
-            text-align: center;
-            font-family: 'Courier New', monospace;
-            font-size: 15px;
-            color: #2d3436;
-            margin: 15px 0;
-        }
-        .amount-text {
-            text-align: center;
-            color: #00b894;
-            font-weight: bold;
-            font-size: 18px;
-            margin-top: 10px;
+            background: #f1f2f6; padding: 12px; border-radius: 10px;
+            text-align: center; font-family: 'Courier New', monospace;
+            font-size: 15px; color: #2d3436; margin: 15px 0;
         }
         .btn {
-            display: block;
-            border: none;
-            border-radius: 12px;
-            padding: 14px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 12px;
-            text-align: center;
-            text-decoration: none;
+            display: block; border: none; border-radius: 12px; padding: 14px;
+            font-weight: bold; font-size: 16px; cursor: pointer; width: 100%;
+            margin-top: 12px; text-align: center; text-decoration: none;
         }
-        .btn-refresh {
-            background: transparent;
-            color: #4B79F6;
-            border: 1px solid #4B79F6;
-        }
-        .btn-admin {
-            background: #00b894;
-            color: white;
-        }
-        .divider {
-            height: 1px;
-            background: #eee;
-            margin: 20px 0;
-        }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+        .btn-refresh { background: transparent; color: #4B79F6; border: 1px solid #4B79F6; }
+        .btn-admin { background: #00b894; color: white; }
+        .divider { height: 1px; background: #eee; margin: 20px 0; }
         .hidden { display: none !important; }
 
         .admin-card {
-            background: #fff;
-            border-radius: 24px;
-            padding: 30px 25px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            background: #fff; border-radius: 24px; padding: 30px 25px;
+            width: 100%; max-width: 420px; box-shadow: 0 10px 40px rgba(0,0,0,0.15);
         }
         .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; color: #333; font-size: 14px; }
-        .form-group input {
-            width: 100%; padding: 12px; border: 2px solid #ddd;
-            border-radius: 10px; font-size: 15px;
-        }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; color: #333; font-size: 16px; }
+        .form-group input { width: 100%; padding: 14px; border: 2px solid #111; border-radius: 10px; font-size: 18px; }
         .stats-row { display: flex; gap: 10px; margin: 15px 0; }
         .stat-col { flex: 1; background: #f5f5f5; border-radius: 10px; padding: 15px 10px; text-align: center; }
-        .stat-num { font-size: 22px; font-weight: bold; color: #4B79F6; }
-        .stat-lab { font-size: 12px; color: #777; margin-top: 4px; }
+        .stat-num { font-size: 32px; font-weight: bold; color: #4B79F6; }
+        .stat-lab { font-size: 14px; color: #777; margin-top: 4px; }
         .key-list {
-            max-height: 200px; overflow-y: auto;
-            background: #f9f9f9; border-radius: 10px; padding: 12px;
-            margin: 15px 0;
+            max-height: 250px; overflow-y: auto; background: #f9f9f9;
+            border-radius: 10px; padding: 12px; margin: 15px 0;
         }
         .key-item {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 8px 0; border-bottom: 1px solid #eee;
-            font-size: 13px;
+            padding: 10px 8px; border-bottom: 1px solid #eee; font-size: 14px;
         }
-        .key-item-code { color: #00b894; font-family: monospace; }
-        .empty-text { color: #999; text-align: center; padding: 15px; }
+        .key-item-code { color: #00b894; font-family: monospace; font-weight: 600; }
+        .empty-text { color: #999; text-align: center; padding: 20px; }
         .login-btn {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 10;
+            position: absolute; top: 15px; left: 15px;
+            background: rgba(255,255,255,0.2); color: white; border: none;
+            padding: 8px 14px; border-radius: 20px; font-weight: bold; cursor: pointer; z-index: 10;
         }
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center;
             padding: 20px; z-index: 100;
         }
-        .modal {
-            background: white; border-radius: 20px; padding: 25px;
-            width: 100%; max-width: 360px;
-        }
+        .modal { background: white; border-radius: 20px; padding: 25px; width: 100%; max-width: 360px; }
         .modal h3 { text-align: center; margin-bottom: 20px; }
         .close-btn {
-            margin-top: 10px; background: none; border: none;
-            color: #888; cursor: pointer; width: 100%; text-align: center; padding: 8px;
-            font-size: 15px;
+            margin-top: 10px; background: none; border: none; color: #888;
+            cursor: pointer; width: 100%; text-align: center; padding: 8px; font-size: 15px;
         }
     </style>
 </head>
@@ -233,7 +118,7 @@
     <button class="login-btn" id="adminLoginBtn" onclick="openLogin()">🔐 Admin</button>
 
     <div id="errorView" class="error-card">
-        <div class="lock-icon">🔒</div>
+        <div class="lock-top-badge">🔒 Admin</div>
         <div class="error-icon">✕</div>
         <h1 class="error-title">Thiếu Thông Tin</h1>
         <p class="error-desc">Mở link từ Bot hoặc Admin để tiếp tục</p>
@@ -242,8 +127,8 @@
 
     <div id="keyView" class="hidden">
         <div class="key-card">
-            <h2 class="page-title">Nhận Key Thành Công</h2>
-            <p class="page-sub">Sao chép key bên dưới để kích hoạt</p>
+            <h2 class="page-title" id="keyViewTitle">Nhận Key</h2>
+            <p class="page-sub" id="keyViewSubtitle">Nhấn nút bên dưới để lấy key</p>
             <div id="keyContent"></div>
         </div>
     </div>
@@ -251,7 +136,6 @@
     <div id="adminView" class="hidden">
         <div class="admin-card">
             <h2 class="page-title">Bảng Quản Lý Admin</h2>
-            <p class="page-sub">Thêm & quản lý danh sách key</p>
             
             <div class="stats-row">
                 <div class="stat-col">
@@ -261,15 +145,15 @@
             </div>
 
             <div class="divider"></div>
-            <h3 style="font-size:16px; margin-bottom:10px;">➕ Thêm Key Mới</h3>
+            <h3 style="font-size:20px; font-weight:bold; margin-bottom:15px;">➕ Thêm Key Mới</h3>
             <div class="form-group">
-                <label>Số tiền nạp</label>
-                <input type="number" id="amountInput" placeholder="400" min="1" />
+                <label>Nhập Key</label>
+                <input type="text" id="keyInput" placeholder="Để trống tự tạo key..." autocomplete="off" />
             </div>
             <button class="btn btn-admin" id="addKeyBtn" onclick="addKey()">✅ Thêm Key</button>
 
             <div class="divider"></div>
-            <h3 style="font-size:16px; margin-bottom:10px;">📋 Danh Sách Key</h3>
+            <h3 style="font-size:20px; font-weight:bold; margin-bottom:15px;">📋 Danh Sách Key</h3>
             <div class="key-list" id="keyListBox"></div>
 
             <button class="btn btn-refresh" onclick="logout()">🚪 Đăng Xuất</button>
@@ -281,11 +165,11 @@
             <h3>🔐 Đăng Nhập Admin</h3>
             <div class="form-group">
                 <label>Tên tài khoản</label>
-                <input type="text" id="userInput" />
+                <input type="text" id="userInput" autocomplete="off" />
             </div>
             <div class="form-group">
                 <label>Mật khẩu</label>
-                <input type="password" id="passInput" />
+                <input type="password" id="passInput" autocomplete="off" />
             </div>
             <button class="btn btn-admin" onclick="doLogin()">Đăng Nhập</button>
             <button class="close-btn" onclick="closeLogin()">✕ Đóng</button>
@@ -293,43 +177,107 @@
     </div>
 
     <script>
+        // === CẤU HÌNH ===
         const ADMIN_USER = "hafvanthinh";
         const ADMIN_PASS = "thinhhack123";
         const BOT_LINK = "https://t.me/Umohvt_bot";
+        const STORAGE_KEY = "umohvt_keydata_v5";
+        const CLAIMED_KEY = "umohvt_claimed_v5";
+        const STORAGE_SIGN = "umohvt_sign_v5"; // Chống sửa dữ liệu
 
+        // === TRẠNG THÁI ===
         let isAdmin = false;
         let isBusy = false;
         let keyList = [];
 
+        // === TẠO CHỮ KÝ ĐỂ CHỐNG SỬA DỮ LIỆU ===
+        function signData(data) {
+            const raw = JSON.stringify(data);
+            let hash = 0;
+            for (let i = 0; i < raw.length; i++) {
+                const char = raw.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash |= 0;
+            }
+            return hash.toString(36);
+        }
+
+        // === TẢI DỮ LIỆU + KIỂM TRA CHỮ KÝ ===
         function loadData() {
             try {
-                const d = localStorage.getItem("keyData");
-                if (!d) return [];
-                const p = JSON.parse(d);
-                if (!Array.isArray(p)) return [];
-                return p.filter(i => 
-                    i && typeof i.key === 'string' && /^[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(i.key) &&
-                    typeof i.amount === 'number' && i.amount > 0
+                const stored = localStorage.getItem(STORAGE_KEY);
+                const savedSign = localStorage.getItem(STORAGE_SIGN);
+                
+                if (!stored) return [];
+                
+                const parsed = JSON.parse(stored);
+                if (!Array.isArray(parsed)) {
+                    localStorage.removeItem(STORAGE_KEY);
+                    localStorage.removeItem(STORAGE_SIGN);
+                    return [];
+                }
+
+                // Kiểm tra dữ liệu bị sửa
+                const currentSign = signData(parsed);
+                if (savedSign !== currentSign) {
+                    console.warn("⚠️ Dữ liệu bị sửa! Tải lại danh sách trống");
+                    localStorage.removeItem(STORAGE_KEY);
+                    localStorage.removeItem(STORAGE_SIGN);
+                    return [];
+                }
+
+                // Lọc hợp lệ
+                return parsed.filter(item => 
+                    item && typeof item === 'object' &&
+                    typeof item.key === 'string' &&
+                    item.key.trim().length >= 8 &&
+                    item.key.trim().length <= 30
                 );
-            } catch { return []; }
-        }
-        function saveData() {
-            localStorage.setItem("keyData", JSON.stringify(keyList));
-        }
-
-        function genKey() {
-            const c = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-            let k = "";
-            for (let i = 0; i < 16; i++) {
-                if (i && i % 4 === 0) k += "-";
-                k += c[Math.floor(Math.random() * c.length)];
+            } catch (err) {
+                console.error("Lỗi tải dữ liệu:", err);
+                localStorage.removeItem(STORAGE_KEY);
+                localStorage.removeItem(STORAGE_SIGN);
+                return [];
             }
-            if (keyList.some(x => x.key === k)) return genKey();
-            return k;
         }
 
-        async function copyText(btn, text, label="Nội dung") {
-            btn.disabled = true;
+        // === LƯU + KÝ DỮ LIỆU ===
+        function saveData(data = keyList) {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                localStorage.setItem(STORAGE_SIGN, signData(data));
+                return true;
+            } catch (err) {
+                console.error("Lỗi lưu dữ liệu:", err);
+                alert("❌ Lưu thất bại — bộ nhớ đầy!");
+                return false;
+            }
+        }
+
+        // === CHỐNG BUFF: ĐÁNH DẤU ĐÃ LẤY ===
+        function hasClaimedKey() {
+            return localStorage.getItem(CLAIMED_KEY) === "true";
+        }
+
+        function markClaimed() {
+            localStorage.setItem(CLAIMED_KEY, "true");
+        }
+
+        // === TẠO KEY TỰ ĐỘNG ===
+        function genKey() {
+            const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+            let key = "";
+            for (let i = 0; i < 16; i++) {
+                if (i > 0 && i % 4 === 0) key += "-";
+                key += chars[Math.floor(Math.random() * chars.length)];
+            }
+            if (keyList.some(item => item.key === key)) return genKey();
+            return key;
+        }
+
+        // === SAO CHÉP ===
+        async function copyText(btn, text, label = "Nội dung") {
+            if (btn) btn.disabled = true;
             try {
                 await navigator.clipboard.writeText(text);
                 alert(`✅ Đã sao chép ${label}!`);
@@ -340,58 +288,111 @@
                 ta.style.opacity = "0";
                 document.body.appendChild(ta);
                 ta.select();
-                document.execCommand("copy");
+                try { document.execCommand("copy"); alert(`✅ Đã sao chép ${label}!`); }
+                catch { alert(`📋 ${label}:\n${text}`); }
                 document.body.removeChild(ta);
-                alert(`✅ Đã sao chép ${label}!`);
             }
-            btn.disabled = false;
+            if (btn) btn.disabled = false;
         }
 
+        // === CHUYỂN TRANG ===
         function showView(name) {
             document.getElementById("errorView").classList.add("hidden");
             document.getElementById("keyView").classList.add("hidden");
             document.getElementById("adminView").classList.add("hidden");
-            if (name === "error") document.getElementById("errorView").classList.remove("hidden");
-            if (name === "key") document.getElementById("keyView").classList.remove("hidden");
-            if (name === "admin") document.getElementById("adminView").classList.remove("hidden");
+            document.getElementById(`${name}View`).classList.remove("hidden");
         }
 
+        // === KIỂM TRA TRUY CẬP ===
         function checkAccess() {
-            const params = new URLSearchParams(window.location.search);
+            keyList = loadData();
+            
             if (isAdmin) { renderAdmin(); return; }
-            if (params.has("from") && params.get("from") === "bot") {
-                if (keyList.length === 0) { showNoKeyAvailable(); return; }
+
+            const params = new URLSearchParams(window.location.search);
+            const hasBotAccess = params.has("from") && params.get("from") === "bot";
+
+            if (hasBotAccess) {
+                // === CHỐNG BUFF: ĐÃ LẤY → KHÔNG CHO LẠI ===
+                if (hasClaimedKey()) {
+                    showAlreadyClaimed();
+                    return;
+                }
+                if (keyList.length === 0) {
+                    showNoKeyAvailable();
+                    return;
+                }
                 showGetKeyPage();
                 return;
             }
+
             showView("error");
         }
 
-        function showGetKeyPage() {
+        // === ĐÃ LẤY RỒI ===
+        function showAlreadyClaimed() {
             showView("key");
-            document.querySelector(".page-title").textContent = "Nhận Key";
-            document.querySelector(".page-sub").textContent = "Nhấn nút bên dưới để lấy key ngẫu nhiên";
+            document.getElementById("keyViewTitle").textContent = "Đã Nhận Key";
+            document.getElementById("keyViewSubtitle").textContent = "Mỗi thiết bị chỉ nhận 1 key";
             document.getElementById("keyContent").innerHTML = `
-                <button class="btn" style="background:#ffaa00; color:#111; font-size:18px; padding:16px;" onclick="takeRandomKey()">🎁 Lấy Key Ngẫu Nhiên</button>
-                <p style="text-align:center; color:#888; margin-top:15px; font-size:13px;">Key sẽ bị xóa ngay sau khi lấy</p>
+                <p style="color:#ff9800; padding:20px; font-weight:bold; font-size:16px;">
+                    ✅ Bạn đã nhận key rồi!<br><br>
+                    Mỗi thiết bị chỉ được nhận <b>1 lần duy nhất</b>.<br>
+                    Tải lại trang, ẩn danh, đổi tab cũng không lấy được thêm.
+                </p>
+                <a href="${BOT_LINK}" class="btn btn-admin">💬 Vào Bot nhập lệnh /rem + key</a>
             `;
         }
 
+        // === TRANG LẤY KEY ===
+        function showGetKeyPage() {
+            showView("key");
+            document.getElementById("keyViewTitle").textContent = "Nhận Key";
+            document.getElementById("keyViewSubtitle").textContent = "Nhấn nút — chỉ lấy được 1 lần";
+            document.getElementById("keyContent").innerHTML = `
+                <button class="btn" id="getKeyBtn" style="background:#ffaa00; color:#111; font-size:18px; padding:16px;" onclick="takeRandomKey()">🎁 Nhận Key Ngay</button>
+                <p style="color:#888; margin-top:15px; font-size:13px;">
+                    ⚠️ Chỉ lấy được <b>1 lần</b> — sau đó không lấy lại được dù làm gì
+                </p>
+            `;
+        }
+
+        // === LẤY KEY — KHÓA VĨNH VIỄN ===
         function takeRandomKey() {
-            if (isBusy || keyList.length === 0) return;
+            if (isBusy) return;
+            if (hasClaimedKey()) { showAlreadyClaimed(); return; }
+            if (keyList.length === 0) { showNoKeyAvailable(); return; }
+
             isBusy = true;
+            const btn = document.getElementById("getKeyBtn");
+            if (btn) btn.disabled = true;
+
+            // Lấy ngẫu nhiên & xóa ngay
             const idx = Math.floor(Math.random() * keyList.length);
-            const item = keyList[idx];
+            const selected = keyList[idx];
             keyList.splice(idx, 1);
-            saveData();
-            showKeyResult(item.key, item.amount);
+            
+            // Lưu trước khi đánh dấu — đảm bảo không mất dữ liệu
+            if (!saveData()) {
+                alert("❌ Lỗi hệ thống! Thử lại.");
+                isBusy = false;
+                if (btn) btn.disabled = false;
+                return;
+            }
+
+            // === KHÓA VĨNH VIỄN — KHÔNG CÁCH NÀO MỞ LẠI ===
+            markClaimed();
+
+            showKeyResult(selected.key);
             isBusy = false;
         }
 
-        function showKeyResult(key, amount) {
+        // === HIỂN THỊ KẾT QUẢ ===
+        function showKeyResult(key) {
             showView("key");
-            document.querySelector(".page-title").textContent = "Nhận Key Thành Công";
-            document.querySelector(".page-sub").textContent = "Sao chép key bên dưới để kích hoạt";
+            document.getElementById("keyViewTitle").textContent = "Key Của Bạn";
+            document.getElementById("keyViewSubtitle").textContent = "Sao chép & gửi vào Bot";
+            
             const lenh = `/rem ${key}`;
             document.getElementById("keyContent").innerHTML = `
                 <div class="key-box">
@@ -399,59 +400,129 @@
                         <span class="key-text">${escapeHtml(key)}</span>
                         <button class="copy-btn" onclick="copyText(this, '${escapeJs(key)}', 'Key')">Chép</button>
                     </div>
-                    <p class="note-one">⚠️ Key dùng 1 lần</p>
+                    <p class="note-one">✅ Đã ghi nhận — không lấy lại được key này</p>
                 </div>
-                <p style="text-align:center; color:#555; margin-top:20px; font-size:15px;">Nhập lệnh sau vào Bot:</p>
+                <p style="color:#555; margin-top:20px; font-size:15px;">Nhập lệnh sau vào Bot:</p>
                 <div class="cmd-box">${escapeHtml(lenh)}</div>
-                <button class="btn btn-refresh" style="margin-top:5px;" onclick="copyText(this, '${escapeJs(lenh)}', 'Lệnh')">📋 Sao Chép Lệnh</button>
-                <p class="amount-text" style="margin-top:20px;">✅ ${amount.toLocaleString('vi')}đ</p>
+                <button class="btn btn-refresh" onclick="copyText(this, '${escapeJs(lenh)}', 'Lệnh')">📋 Sao Chép Lệnh</button>
                 <a href="${BOT_LINK}" class="btn btn-admin" style="margin-top:20px;">💬 Vào Bot Nhập Ngay</a>
             `;
         }
 
+        // === HẾT KEY ===
         function showNoKeyAvailable() {
             showView("key");
-            document.querySelector(".page-title").textContent = "Hiện Không Có Key";
-            document.querySelector(".page-sub").textContent = "Vui lòng quay lại sau";
+            document.getElementById("keyViewTitle").textContent = "Hết Key";
+            document.getElementById("keyViewSubtitle").textContent = "Admin sẽ cập nhật sớm";
             document.getElementById("keyContent").innerHTML = `
-                <p style="text-align:center; color:#ff4444; padding:20px;">Hết key rồi, vui lòng quay lại sau!</p>
+                <p style="color:#ff4444; padding:20px; font-size:16px;">
+                    Hiện không còn key nào!<br>
+                    Vui lòng quay lại sau.
+                </p>
                 <a href="${BOT_LINK}" class="btn btn-refresh">🔄 Quay Lại Bot</a>
             `;
         }
 
-        function openLogin() { document.getElementById("loginModal").classList.remove("hidden"); }
-        function closeLogin() { document.getElementById("loginModal").classList.add("hidden"); }
+        // === ADMIN ===
+        function openLogin() {
+            document.getElementById("loginModal").classList.remove("hidden");
+            document.getElementById("userInput").value = "";
+            document.getElementById("passInput").value = "";
+        }
+        function closeLogin() {
+            document.getElementById("loginModal").classList.add("hidden");
+        }
         function doLogin() {
             const u = document.getElementById("userInput").value.trim();
             const p = document.getElementById("passInput").value;
+            
             if (u === ADMIN_USER && p === ADMIN_PASS) {
-                isAdmin = true; closeLogin(); renderAdmin();
-            } else { alert("❌ Sai tài khoản hoặc mật khẩu!"); }
+                isAdmin = true;
+                closeLogin();
+                renderAdmin();
+            } else {
+                alert("❌ Sai tài khoản hoặc mật khẩu!");
+                document.getElementById("passInput").value = "";
+            }
         }
-        function logout() { isAdmin = false; checkAccess(); }
+        function logout() {
+            isAdmin = false;
+            showView("error");
+        }
         function renderAdmin() {
             showView("admin");
+            keyList = loadData();
             document.getElementById("keyCount").textContent = keyList.length;
-            let html = keyList.length === 0 ? '<p class="empty-text">Chưa có key nào</p>' :
-                keyList.map(item => `<div class="key-item"><span class="key-item-code">${escapeHtml(item.key)}</span><span>${item.amount.toLocaleString('vi')}đ</span></div>`).join('');
+            
+            let html = "";
+            if (keyList.length === 0) {
+                html = '<p class="empty-text">Chưa có key nào được thêm</p>';
+            } else {
+                html = keyList.map(item => 
+                    `<div class="key-item"><span class="key-item-code">${escapeHtml(item.key)}</span></div>`
+                ).join('');
+            }
             document.getElementById("keyListBox").innerHTML = html;
         }
+
+        // === THÊM KEY ===
         function addKey() {
-            const val = parseInt(document.getElementById("amountInput").value) || 400;
-            if (val <= 0) { alert("⚠️ Nhập số tiền hợp lệ!"); return; }
-            const newKey = genKey();
-            keyList.push({ key: newKey, amount: val });
-            saveData();
-            alert(`✅ Đã thêm:\nKey: ${newKey}\nSố tiền: ${val.toLocaleString('vi')}đ`);
-            document.getElementById("amountInput").value = "";
+            const inputVal = document.getElementById("keyInput").value.trim();
+            
+            // Tạo key hoặc dùng key nhập
+            const newKey = inputVal || genKey();
+            
+            // Kiểm tra định dạng tối thiểu
+            if (newKey.length < 4) {
+                alert("❌ Key quá ngắn!");
+                return;
+            }
+            
+            // Kiểm tra trùng
+            if (keyList.some(item => item.key === newKey)) {
+                alert("❌ Key này đã tồn tại!");
+                return;
+            }
+
+            keyList.push({ key: newKey });
+            
+            if (!saveData()) {
+                alert("❌ Lưu thất bại!");
+                return;
+            }
+            
+            alert(`✅ Đã thêm thành công!\nKey: ${newKey}`);
+            document.getElementById("keyInput").value = "";
             renderAdmin();
         }
 
-        function escapeHtml(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-        function escapeJs(t) { return t.replace(/'/g, "\\'").replace(/"/g, '\\"'); }
+        // === Tránh XSS ===
+        function escapeHtml(t) {
+            const d = document.createElement('div');
+            d.textContent = t;
+            return d.innerHTML;
+        }
+        function escapeJs(t) {
+            return t.replace(/[\\'"]/g, '\\$&');
+        }
 
-        keyList = loadData();
-        checkAccess();
+        // === KHỞI TẠO & BẢO VỆ ===
+        window.onload = () => {
+            isAdmin = false; // Mở lại = đăng xuất
+            checkAccess();
+        };
+
+        // Ngăn chặn quay lại trang trước
+        window.addEventListener('pageshow', (e) => {
+            if (e.persisted && !isAdmin) {
+                checkAccess();
+            }
+        });
+
+        // Tắt chỉnh sửa localStorage qua console
+        try {
+            Object.defineProperty(localStorage, 'setItem', { writable: false });
+        } catch {}
     </script>
 </body>
 </html>
